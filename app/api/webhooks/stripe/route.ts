@@ -33,13 +33,11 @@ export async function POST(req: NextRequest) {
           })
           .eq('id', bookingId)
 
-        // Update equipment items to confirmed
         await supabase
           .from('booking_equipment')
           .update({ status: 'confirmed' })
           .eq('booking_id', bookingId)
 
-        // Block date in availability
         const { data: booking } = await supabase
           .from('bookings')
           .select('venue_id, event_date')
@@ -54,8 +52,7 @@ export async function POST(req: NextRequest) {
           })
         }
 
-        // TODO: Send confirmation email via Resend
-        console.log(`✅ Booking ${bookingId} confirmed`)
+        console.log(`Booking ${bookingId} confirmed`)
       }
       break
     }
@@ -76,5 +73,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ received: true })
 }
-
-export const config = { api: { bodyParser: false } }
