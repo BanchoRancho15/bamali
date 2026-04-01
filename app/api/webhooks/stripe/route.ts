@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
   switch (event.type) {
     case 'checkout.session.completed': {
-      const session = event.data.object as Stripe.CheckoutSession
+      const session = event.data.object as Stripe.Checkout.Session
       const bookingId = session.metadata?.booking_id
 
       if (bookingId) {
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     }
 
     case 'checkout.session.expired': {
-      const session = event.data.object as Stripe.CheckoutSession
+      const session = event.data.object as Stripe.Checkout.Session
       const bookingId = session.metadata?.booking_id
       if (bookingId) {
         await supabase
